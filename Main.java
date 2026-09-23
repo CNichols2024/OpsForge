@@ -6,53 +6,64 @@ Comment */
 public class Main {
     public static void main(String[] args) {
         String hostname = "Desktop-01";
-        int uptimeDays = 14;
-        double diskUsage = 89.9;
+        int uptimeDays = 3;
+        double diskUsage = 45;
         boolean domainConnected = false;
         
-
         System.out.println("~~~~~OPS FORGE~~~~~"); //Start of program output
-        checkDiskHealth(diskUsage);
-        checkUptime(uptimeDays);
-        domaincheck(domainConnected);
-        
-
+        String diskStatus = checkDiskHealth(diskUsage);
+        String uptimeStatus = checkUptime(uptimeDays);
+        String domainStatus = domaincheck(domainConnected);
         
         System.out.println("~~~~~HEALTH REPORT~~~~~"); //Start of health report
+        System.out.println("Overall Health Status: " + overallHealthStatus(diskStatus, uptimeStatus, domainStatus));
         System.out.println("Hostname: " + hostname);
-        System.out.println("Uptime: " + uptimeDays + " days");
-        System.out.println("Disk Usage: " + diskUsage + "%");
-        System.out.println("Domain Connected: " + domainConnected);
+        System.out.println("Uptime: " + uptimeStatus);
+        System.out.println("Disk Usage: " + diskStatus);
+        System.out.println("Domain Connected: " + domainStatus);
+
+        
     } //end main()
 
-    public static void checkDiskHealth(double diskUsage) {
-        if (diskUsage >= 90) {
-            System.out.println("Disk: CRITICAL!");
-            } else if (diskUsage >=80) {
-                System.out.println("Disk: Warning!");
+    public static String overallHealthStatus(String diskStatus, String uptimeStatus, String domainStatus) {
+            if (diskStatus.equals("CRITICAL") || uptimeStatus.equals("CRITICAL") || domainStatus.equals("CRITICAL")) {
+                return "CRITICAL";
+            } else if (diskStatus.equals("WARNING") || uptimeStatus.equals("WARNING") || domainStatus.equals("WARNING")) {
+                return "WARNING";
             } else {
-            System.out.println("Disk: Healthy");
+                return "HEALTHY";
+            }
+        }
+                
+
+    public static String checkDiskHealth(double diskUsage) {
+        if (diskUsage >= 90) {
+            return "CRITICAL";
+            } else if (diskUsage >=80) {
+                return "WARNING";
+            } else {
+           return "HEALTHY";
             } 
         } //End checkDiskHealth()
 
-    public static void checkUptime(int uptimeDays) {
+    public static String checkUptime(int uptimeDays) {
         if (uptimeDays <= 7) {
-            System.out.println("Uptime: Healthy");
+            return "HEALTHY";
         } else if(uptimeDays > 14) {
-            System.out.println("Uptime: CRITICAL");
+            return "CRITICAL";
         } else {
-            System.out.println("Uptime: Warning!");
+            return "WARNING";
         }
     }//End checkUptime
 
-    public static void domaincheck(boolean domainConnected) {
+    public static String domaincheck(boolean domainConnected) {
         if (domainConnected) {
-            System.out.println("Domain: Connected");
+            return "HEALTHY";
     } else {
-            System.out.println("Domain: Not Connected");
+            return "CRITICAL";
     }
 
-    }
+    } //End Domain Check
 
 
 
