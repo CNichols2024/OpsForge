@@ -4,25 +4,56 @@ Comment */
 
 
 public class Main {
-    public static void main(String[] args) {
-        String hostname = "Desktop-01";
-        int uptimeDays = 3;
-        double diskUsage = 45;
-        boolean domainConnected = false;
-        
-        System.out.println("~~~~~OPS FORGE~~~~~"); //Start of program output
-        String diskStatus = checkDiskHealth(diskUsage);
-        String uptimeStatus = checkUptime(uptimeDays);
-        String domainStatus = domaincheck(domainConnected);
-        
-        System.out.println("~~~~~HEALTH REPORT~~~~~"); //Start of health report
-        System.out.println("Overall Health Status: " + overallHealthStatus(diskStatus, uptimeStatus, domainStatus));
-        System.out.println("Hostname: " + hostname);
-        System.out.println("Uptime: " + uptimeStatus);
-        System.out.println("Disk Usage: " + diskStatus);
-        System.out.println("Domain Connected: " + domainStatus);
 
+    public static void main(String[] args) {
         
+        
+        Endpoint pc1 = new Endpoint(
+            "DESKTOP-01",
+            14,
+            89.9,
+            true
+        );
+        Endpoint pc2 = new Endpoint(
+            "DESKTOP-02",
+            3,
+            45.0,
+            false
+        );
+        System.out.println("~~~~~OPS FORGE~~~~~"); //Start of program output
+        String diskStatus = checkDiskHealth(pc1.diskUsage);
+        String hostName = pc1.hostName;
+        String domainStatus = domaincheck(pc1.domainConnected);
+        String uptimeStatus = checkUptime(pc1.uptimeDays);
+
+        String overallStatus = overallHealthStatus(
+            diskStatus,
+            uptimeStatus,
+            domainStatus
+        );
+
+        System.out.println("~~~~~HEALTH REPORT~~~~~"); //Start of health report
+        System.out.println(hostName); //First host
+        System.out.println("Status: " + overallStatus);
+        System.out.println("Uptime: " + uptimeStatus);
+        System.out.println("Disk Status: " + diskStatus);
+        System.out.println("Domain: " + domainStatus);
+
+        System.out.println("============");
+        //2nd host
+        diskStatus = checkDiskHealth(pc2.diskUsage);
+        hostName = pc2.hostName;
+        domainStatus = domaincheck(pc2.domainConnected);
+        uptimeStatus = checkUptime(pc2.uptimeDays);
+
+        System.out.println(hostName); //First host
+        System.out.println("Status: " + overallStatus);
+        System.out.println("Uptime: " + uptimeStatus);
+        System.out.println("Disk Status: " + diskStatus);
+        System.out.println("Domain: " + domainStatus);
+        
+        
+
     } //end main()
 
     public static String overallHealthStatus(String diskStatus, String uptimeStatus, String domainStatus) {
@@ -64,8 +95,6 @@ public class Main {
     }
 
     } //End Domain Check
-
-
 
 } //End Public Class Main
 
