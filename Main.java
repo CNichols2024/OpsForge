@@ -1,7 +1,7 @@
 //Single Line Comment
 /*Multi Line Comment */
 
-
+import java.util.ArrayList;
 public class Main {
     
     public static void main(String[] args) {
@@ -19,12 +19,27 @@ public class Main {
             45.0,
             false
         );
+        Endpoint pc3 = new Endpoint (
+            "DESKTOP-03",
+            3,
+            45.0,
+            false
+        );
+
+        ArrayList<Endpoint> computers = new ArrayList<>();
+        computers.add(pc1);
+        computers.add(pc2);
+        computers.add(pc3);
+        System.out.println(computers.size());
+
         String separator =  "====================";
         System.out.println("~~~~~OPS FORGE~~~~~"); //Start of program output
         System.out.println(separator);
         System.out.println("~~~~~HEALTH REPORT~~~~~"); //Start of health report
-        pc1.printHealthReport();
-        pc2.printHealthReport();
+        System.out.println("Monitored Endpoints: " + computers.size());
+        for (Endpoint pc : computers) {
+            pc.printHealthReport();
+        }
     }
     
     
